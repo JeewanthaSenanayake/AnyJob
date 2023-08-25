@@ -10,7 +10,7 @@ import { Button, TextInput } from 'react-native-paper';
 
 import {
   Image,
-  SafeAreaView,
+  ImageBackground,
   ScrollView,
   StatusBar,
   StyleSheet,
@@ -36,14 +36,18 @@ function App(): JSX.Element {
 
 
   return (
-    <SafeAreaView style={backgroundStyle}>
+    <ImageBackground
+      source={require('./assets/background/bg.jpg')}
+      style={styles.imageBackground}
+    >
+    {/* <SafeAreaView style={backgroundStyle}> */}
       <StatusBar
         barStyle={isDarkMode ? 'light-content' : 'dark-content'}
         backgroundColor={backgroundStyle.backgroundColor}
       />
       <ScrollView
         contentInsetAdjustmentBehavior="automatic"
-        style={backgroundStyle}>
+        >
 
         <View style={styles.container}>
           <Image style={styles.imgs} source={require('./assets/images/anyjob.png')} />
@@ -52,7 +56,6 @@ function App(): JSX.Element {
         <Text style={styles.mainTitle}>Welcome</Text>
 
         <View style={styles.textInputView}>
-
 
           <TextInput
             style={styles.textInput}
@@ -96,13 +99,16 @@ function App(): JSX.Element {
             <Text style={{ textAlign: "left",fontWeight: "bold", marginTop: 25 }} onPress={() => console.log('Forgot password?')}>Forgot password?</Text>
             <View style={{ flexDirection: 'row', justifyContent: "flex-start",marginTop: 25 }}>
             <Text>Don't have an account?</Text>
-            <Text style={{ fontWeight: "bold" }} onPress={() => console.log('Sign Up')}>Sign Up</Text>
+            <Text style={{ fontWeight: "bold" }} onPress={() => {
+              console.log('Sign Up');
+              }}>Sign Up</Text>
           </View>
           </View>
           
         </View>
       </ScrollView>
-    </SafeAreaView>
+    {/* </SafeAreaView> */}
+    </ImageBackground>
   );
 }
 
@@ -112,14 +118,16 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     textAlign: "center",
     marginTop: 40,
+    color:"white"
   },
   imgs: {
-    height: 200,
-    width: 200,
-    alignContent: "center"
+    height: 225,
+    width: 225,
+    alignContent: "center",
+    resizeMode:"contain"
   },
   container: {
-    marginTop: 70,
+    marginTop: 50,
     flex: 1,
     justifyContent: "center",
     alignItems: 'center'
@@ -138,6 +146,12 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     flex: 1
+  },
+  imageBackground: {
+    flex: 1,
+    resizeMode: 'cover', // This adjusts the image to cover the entire component
+    justifyContent: 'center', // Align content vertically
+    // alignItems: 'center', // Align content horizontally
   },
 
 
