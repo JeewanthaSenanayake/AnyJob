@@ -31,7 +31,7 @@ function LoginScreen({navigation}:any): JSX.Element {
   const [secureTextEntry, setSecureTextEntry] = useState(true);
 
   const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.black,
+    backgroundColor: isDarkMode ? Colors.darker :  Colors.lighter,
   };
 
 

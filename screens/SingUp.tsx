@@ -34,14 +34,14 @@ function SingUpScreen({ navigation }: any): JSX.Element {
   const [secureTextEntryCon, setSecureTextEntryCon] = useState(true);
 
   const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.black,
+    backgroundColor: isDarkMode ? Colors.darker :  Colors.lighter,
   };
 
   function SingUp() {
     // create account
     if (usernameInputValue != '' && emailInputValue != "" && 
     (passwordInputValue == passwordConInputValue) && passwordConInputValue != '') {
-      navigation.navigate('Home');
+      navigation.navigate('Category');
     } else {
       console.log("no data");
     }

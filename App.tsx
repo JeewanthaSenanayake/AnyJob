@@ -10,6 +10,7 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
 import LoginScreen from './screens/Login'
 import SingUpScreen from './screens/SingUp'
+import CategoryScreen from './screens/Category'
 
 const Stack = createNativeStackNavigator();
 
@@ -28,6 +29,11 @@ function App(): JSX.Element {
           name="SingUp"
           component={SingUpScreen}
           options={{title: 'SingUp',headerShown: false}}
+        />
+         <Stack.Screen
+          name="Category"
+          component={CategoryScreen}
+          options={{title: 'Category',headerShown: false}}
         />
       </Stack.Navigator>
     </NavigationContainer>
