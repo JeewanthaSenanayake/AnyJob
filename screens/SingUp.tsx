@@ -24,36 +24,48 @@ import {
 } from 'react-native/Libraries/NewAppScreen';
 
 
-function SingUpScreen(): JSX.Element {
+function SingUpScreen({ navigation }: any): JSX.Element {
   const isDarkMode = useColorScheme() === 'dark';
   const [usernameInputValue, setUsernameInputValue] = useState('');
+  const [emailInputValue, setEmailInputValue] = useState('');
   const [passwordInputValue, setPasswordInputValue] = useState('');
+  const [passwordConInputValue, setPasswordConInputValue] = useState('');
   const [secureTextEntry, setSecureTextEntry] = useState(true);
+  const [secureTextEntryCon, setSecureTextEntryCon] = useState(true);
 
   const backgroundStyle = {
     backgroundColor: isDarkMode ? Colors.darker : Colors.black,
   };
 
+  function SingUp() {
+    // create account
+    if (usernameInputValue != '' && emailInputValue != "" && 
+    (passwordInputValue == passwordConInputValue) && passwordConInputValue != '') {
+      navigation.navigate('Home');
+    } else {
+      console.log("no data");
+    }
+
+  }
 
   return (
     <ImageBackground
       source={require('../assets/background/bg.jpg')}
       style={styles.imageBackground}
     >
-    {/* <SafeAreaView style={backgroundStyle}> */}
       <StatusBar
         barStyle={isDarkMode ? 'light-content' : 'dark-content'}
         backgroundColor={backgroundStyle.backgroundColor}
       />
       <ScrollView
         contentInsetAdjustmentBehavior="automatic"
-        >
+      >
 
         <View style={styles.container}>
           <Image style={styles.imgs} source={require('../assets/images/anyjob.png')} />
         </View>
 
-        <Text style={styles.mainTitle}>Welcome 2</Text>
+        <Text style={styles.mainTitle}>Sign Up</Text>
 
         <View style={styles.textInputView}>
 
@@ -62,12 +74,14 @@ function SingUpScreen(): JSX.Element {
             placeholder="Username"
             onChangeText={setUsernameInputValue}
             value={usernameInputValue}
-            left={
-              <TextInput.Icon
-                icon={require('../assets/icons/username.png')}
-              />
-            }
-
+          ></TextInput>
+          <TextInput
+            style={styles.textInput}
+            placeholder="Email"
+            onChangeText={setEmailInputValue}
+            value={emailInputValue}
+            autoCapitalize="none"
+            keyboardType="email-address"
           ></TextInput>
 
 
@@ -86,48 +100,54 @@ function SingUpScreen(): JSX.Element {
                 }}
               />
             }
-            left={
+          />
+
+          <TextInput
+            style={styles.textInput}
+            label="Confirm password"
+            secureTextEntry={secureTextEntryCon}
+            onChangeText={setPasswordConInputValue}
+            value={passwordConInputValue}
+            right={
               <TextInput.Icon
-                icon={require('../assets/icons/password.png')}
+                icon={secureTextEntryCon ? require('../assets/icons/eye.png') : require('../assets/icons/eye-off.png')}
+                onPress={() => {
+                  setSecureTextEntryCon(!secureTextEntryCon);
+                  return false;
+                }}
               />
             }
           />
+
+
           <View style={styles.logingContainer}>
-            <Button style={styles.loginBtn} mode="contained" onPress={() => console.log('Login')}>
-              Login
+            <Button style={styles.loginBtn} mode="contained" onPress={() => SingUp()}>
+              Sign Up
             </Button>
-            <Text style={{ textAlign: "left",fontWeight: "bold", marginTop: 25 }} onPress={() => console.log('Forgot password?')}>Forgot password?</Text>
-            <View style={{ flexDirection: 'row', justifyContent: "flex-start",marginTop: 25 }}>
-            <Text>Don't have an account?</Text>
-            <Text style={{ fontWeight: "bold" }} onPress={() => {
-              console.log('Sign Up');
-              }}>Sign Up</Text>
           </View>
-          </View>
-          
         </View>
       </ScrollView>
-    {/* </SafeAreaView> */}
     </ImageBackground>
   );
 }
 
 const styles = StyleSheet.create({
   mainTitle: {
-    fontSize: 50,
+    fontSize: 40,
     fontWeight: "bold",
-    textAlign: "center",
-    marginTop: 40,
-    color:"white"
+    textAlign: "left",
+    marginTop: 10,
+    marginLeft: 40,
+    color: "white"
   },
   imgs: {
     height: 225,
     width: 225,
     alignContent: "center",
-    resizeMode:"contain"
+    resizeMode: "contain"
   },
   container: {
-    marginTop: 50,
+    marginTop: 40,
     flex: 1,
     justifyContent: "center",
     alignItems: 'center'
@@ -153,29 +173,12 @@ const styles = StyleSheet.create({
     justifyContent: 'center', // Align content vertically
     // alignItems: 'center', // Align content horizontally
   },
-
-
-
-
   textInputView: {
-    padding: 40
+    paddingLeft: 40,
+    paddingRight: 40,
+    paddingTop: 20,
   },
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
-  },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
-  },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
-  },
-  highlight: {
-    fontWeight: '700',
-  },
+
 });
 
 export default SingUpScreen;
