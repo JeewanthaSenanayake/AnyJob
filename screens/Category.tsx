@@ -30,8 +30,16 @@ function Category({ navigation }: any): JSX.Element {
                 <Text style={styles.categoryTitle}>Select your category</Text>
 
                 <View style={styles.btnView}>
-                    <Button style={styles.loginBtn} mode="contained" onPress={() => console.log('Worker')}>Worker</Button>
-                    <Button style={styles.loginBtn} mode="contained" onPress={() => console.log('Customer')}>Customer</Button>
+                    <Button style={styles.loginBtn} mode="contained" onPress={() => {
+                        console.log('Worker');
+                        let category = "Worker";
+                        navigation.navigate('CreateAccount',{ category })
+                        }}>Worker</Button>
+                    <Button style={styles.loginBtn} mode="contained" onPress={() => {
+                        console.log('Customer')
+                        let category = "Customer";
+                        navigation.navigate('CreateAccount',{ category })
+                        }}>Customer</Button>
                 </View>
 
             </ScrollView>
