@@ -5,7 +5,7 @@
  * @format
  */
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button, TextInput } from 'react-native-paper';
 
 import {
@@ -24,6 +24,7 @@ import {
 } from 'react-native/Libraries/NewAppScreen';
 
 
+
 function SingUpScreen({ navigation }: any): JSX.Element {
   const isDarkMode = useColorScheme() === 'dark';
   const [usernameInputValue, setUsernameInputValue] = useState('');
@@ -33,20 +34,28 @@ function SingUpScreen({ navigation }: any): JSX.Element {
   const [secureTextEntry, setSecureTextEntry] = useState(true);
   const [secureTextEntryCon, setSecureTextEntryCon] = useState(true);
 
+  // const [data, setData] = useState(null);
+
   const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker :  Colors.lighter,
+    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
   };
 
   function SingUp() {
     // create account
-    if (usernameInputValue != '' && emailInputValue != "" && 
-    (passwordInputValue == passwordConInputValue) && passwordConInputValue != '') {
-      navigation.navigate('Category');
+    if (usernameInputValue != '' && emailInputValue != "" &&
+      (passwordInputValue == passwordConInputValue) && passwordConInputValue != '') {
+        let userCred = {
+          "uname":usernameInputValue,
+          "password":passwordInputValue,
+          "email":emailInputValue
+        }
+      navigation.navigate('Category', {userCred});
     } else {
       console.log("no data");
     }
 
   }
+
 
   return (
     <ImageBackground
@@ -124,6 +133,7 @@ function SingUpScreen({ navigation }: any): JSX.Element {
             <Button style={styles.loginBtn} mode="contained" onPress={() => SingUp()}>
               Sign Up
             </Button>
+            
           </View>
         </View>
       </ScrollView>

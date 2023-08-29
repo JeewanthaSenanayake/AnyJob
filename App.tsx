@@ -12,6 +12,7 @@ import LoginScreen from './screens/Login'
 import SingUpScreen from './screens/SingUp'
 import CategoryScreen from './screens/Category'
 import CreateAccount from './screens/CreateAccunt'
+import CreateAccuntStep2 from './screens/CreateAccuntStep2'
 
 const Stack = createNativeStackNavigator();
 
@@ -40,6 +41,11 @@ function App(): JSX.Element {
           name="CreateAccount"
           component={CreateAccount}
           options={{title: 'CreateAccount',headerShown: false}}
+        />
+        <Stack.Screen
+          name="CreateAccuntStep2"
+          component={CreateAccuntStep2}
+          options={{title: 'CreateAccuntStep2',headerShown: false}}
         />
       </Stack.Navigator>
     </NavigationContainer>

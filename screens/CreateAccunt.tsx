@@ -3,11 +3,12 @@ import { Image, ImageBackground, ScrollView, StatusBar, StyleSheet, View, useCol
 import { Button, RadioButton, Text, TextInput } from 'react-native-paper';
 import DropDown from 'react-native-paper-dropdown';
 import { Colors } from 'react-native/Libraries/NewAppScreen';
+import axios from '../services/axiosConfig';
 
 
 function CreateAccount({ navigation, route }: any): JSX.Element {
 
-    const { category } = route.params;
+    const { singUpedUserData } = route.params;
     const [formData, setFormData] = useState({
         fname: '',
         lname: '',
@@ -18,6 +19,8 @@ function CreateAccount({ navigation, route }: any): JSX.Element {
         gender: '',
         location: '',
         category: '',
+        role:'',
+        id:''
     });
     const [showDropDown, setShowDropDown] = useState(false);
     const categoryList = [
@@ -48,6 +51,21 @@ function CreateAccount({ navigation, route }: any): JSX.Element {
         });
     };
 
+    async function saveData(data: any) {
+        console.log(data)
+        await axios.post(`/api/account/create_account`, data).then(res => {
+            if (res.status == 200) {
+                console.log("Account created")
+                navigation.navigate('Home');
+            }
+        })
+            .catch(error => {
+                // Handle errors here
+                console.error('API call error:', error);
+
+            });
+    }
+
     return (
         <ImageBackground
             source={require('../assets/background/bg.jpg')}
@@ -77,7 +95,7 @@ function CreateAccount({ navigation, route }: any): JSX.Element {
                         onChangeText={(value) => handleInputChange('lname', value)}
                         value={formData.lname}
                     ></TextInput>
-                    {category == 'Worker' ?
+                    {singUpedUserData.role == 'Worker' ?
                         (
                             <View style={styles.textInput}>
                                 <DropDown
@@ -133,9 +151,25 @@ function CreateAccount({ navigation, route }: any): JSX.Element {
                 </View>
 
                 <View style={styles.logingContainer}>
-                    <Button style={styles.loginBtn} mode="contained" onPress={() => console.log(formData)}>
+                    {singUpedUserData.role == 'Worker'? <Button style={styles.loginBtn} mode="contained" onPress={() => {
+                       
+                       formData['role'] = singUpedUserData.role
+                       formData['id'] = singUpedUserData.id
+                        navigation.navigate('CreateAccuntStep2', { formData });
+
+                        }}>
                         Next
+                    </Button>:<View style={styles.logingContainer}>
+                    <Button style={styles.loginBtn} mode="contained" onPress={async () => {
+                        // formData.descrip = experienceeInputValue;
+                        formData['role'] = singUpedUserData.role
+                        formData['id'] = singUpedUserData.id
+                        console.log(formData)
+                        await saveData(formData)
+                    }}>
+                        Create
                     </Button>
+                </View>}
                 </View>
 
             </ScrollView>

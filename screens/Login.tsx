@@ -24,7 +24,9 @@ import {
 } from 'react-native/Libraries/NewAppScreen';
 
 
-function LoginScreen({navigation}:any): JSX.Element {
+
+
+function LoginScreen({navigation}:any): JSX.Element  {
   const isDarkMode = useColorScheme() === 'dark';
   const [usernameInputValue, setUsernameInputValue] = useState('');
   const [passwordInputValue, setPasswordInputValue] = useState('');
@@ -32,7 +34,8 @@ function LoginScreen({navigation}:any): JSX.Element {
 
   const backgroundStyle = {
     backgroundColor: isDarkMode ? Colors.darker :  Colors.lighter,
-  };
+  }
+
 
 
   return (
@@ -180,3 +183,7 @@ const styles = StyleSheet.create({
 });
 
 export default LoginScreen;
+function componentDidMount() {
+  throw new Error('Function not implemented.');
+}
+

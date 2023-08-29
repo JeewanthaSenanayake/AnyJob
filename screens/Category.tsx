@@ -1,14 +1,43 @@
+
 import React, { useState } from 'react';
 import { Image, ImageBackground, ScrollView, StatusBar, StyleSheet, View, useColorScheme } from 'react-native';
 import { Button, Text } from 'react-native-paper';
 import { Colors } from 'react-native/Libraries/NewAppScreen';
 
-function Category({ navigation }: any): JSX.Element {
+import axios from '../services/axiosConfig';
+
+function Category({ navigation, route }: any): JSX.Element {
     const isDarkMode = useColorScheme() === 'dark';
 
     const backgroundStyle = {
         backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
     };
+    const { userCred } = route.params;
+    let userData = "";
+
+    async function singUpToUser(data: any) {
+        await axios.post(`/api/auth/sing_up`, data).then(
+            res => {
+                if (res.status == 200) {
+
+
+                    let singUpedUserData = {
+                        "role": data.role,
+                        "id": res.data.id
+                    }
+                    console.log(singUpedUserData);
+                    navigation.navigate('CreateAccount', { singUpedUserData })
+                }
+
+                // 
+
+            })
+            .catch(error => {
+                // Handle errors here
+                console.error('API call error:', error);
+
+            });
+    }
 
     return (
         <ImageBackground
@@ -30,16 +59,19 @@ function Category({ navigation }: any): JSX.Element {
                 <Text style={styles.categoryTitle}>Select your category</Text>
 
                 <View style={styles.btnView}>
-                    <Button style={styles.loginBtn} mode="contained" onPress={() => {
+                    <Button style={styles.loginBtn} mode="contained" onPress={async () => {
                         console.log('Worker');
+
                         let category = "Worker";
-                        navigation.navigate('CreateAccount',{ category })
-                        }}>Worker</Button>
-                    <Button style={styles.loginBtn} mode="contained" onPress={() => {
+                        userCred.role = category;
+                        await singUpToUser(userCred);
+                    }}>Worker</Button>
+                    <Button style={styles.loginBtn} mode="contained" onPress={async () => {
                         console.log('Customer')
                         let category = "Customer";
-                        navigation.navigate('CreateAccount',{ category })
-                        }}>Customer</Button>
+                        userCred.role = category;
+                        await singUpToUser(userCred);
+                    }}>Customer</Button>
                 </View>
 
             </ScrollView>
@@ -72,15 +104,15 @@ const styles = StyleSheet.create({
         paddingRight: 40,
         paddingTop: 40,
         fontSize: 20,
-        color:"white",
+        color: "white",
     },
     loginBtn: {
         width: 200,
         marginTop: 45,
     },
-    btnView:{
-        alignItems:"center",
-        marginTop:20,
+    btnView: {
+        alignItems: "center",
+        marginTop: 20,
     }
 });
 
