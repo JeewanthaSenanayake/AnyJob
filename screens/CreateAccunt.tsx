@@ -19,8 +19,9 @@ function CreateAccount({ navigation, route }: any): JSX.Element {
         gender: '',
         location: '',
         category: '',
-        role:'',
-        id:''
+        role: '',
+        id: '',
+        rating: 0
     });
     const [showDropDown, setShowDropDown] = useState(false);
     const categoryList = [
@@ -87,18 +88,6 @@ function CreateAccount({ navigation, route }: any): JSX.Element {
                     <Text style={styles.headerText}>Create Account</Text>
                 </View>
                 <View style={styles.textInputView}>
-                    <TextInput
-                        style={styles.textInput}
-                        placeholder="First Name*"
-                        onChangeText={(value) => handleInputChange('fname', value)}
-                        value={formData.fname}
-                    ></TextInput>
-                    <TextInput
-                        style={styles.textInput}
-                        placeholder="Last Name*"
-                        onChangeText={(value) => handleInputChange('lname', value)}
-                        value={formData.lname}
-                    ></TextInput>
                     {singUpedUserData.role == 'Worker' ?
                         (
                             <View style={styles.textInput}>
@@ -112,6 +101,19 @@ function CreateAccount({ navigation, route }: any): JSX.Element {
                                     list={categoryList}
                                 ></DropDown></View>) : null
                     }
+                    <TextInput
+                        style={styles.textInput}
+                        placeholder="First Name*"
+                        onChangeText={(value) => handleInputChange('fname', value)}
+                        value={formData.fname}
+                    ></TextInput>
+                    <TextInput
+                        style={styles.textInput}
+                        placeholder="Last Name*"
+                        onChangeText={(value) => handleInputChange('lname', value)}
+                        value={formData.lname}
+                    ></TextInput>
+
                     <TextInput
                         style={styles.textInput}
                         placeholder="Address*"
@@ -155,25 +157,25 @@ function CreateAccount({ navigation, route }: any): JSX.Element {
                 </View>
 
                 <View style={styles.logingContainer}>
-                    {singUpedUserData.role == 'Worker'? <Button style={styles.loginBtn} mode="contained" onPress={() => {
-                       
-                       formData['role'] = singUpedUserData.role
-                       formData['id'] = singUpedUserData.id
-                        navigation.navigate('CreateAccuntStep2', { formData });
+                    {singUpedUserData.role == 'Worker' ? <Button style={styles.loginBtn} mode="contained" onPress={() => {
 
-                        }}>
-                        Next
-                    </Button>:<View style={styles.logingContainer}>
-                    <Button style={styles.loginBtn} mode="contained" onPress={async () => {
-                        // formData.descrip = experienceeInputValue;
                         formData['role'] = singUpedUserData.role
                         formData['id'] = singUpedUserData.id
-                        console.log(formData)
-                        await saveData(formData)
+                        navigation.navigate('CreateAccuntStep2', { formData });
+
                     }}>
-                        Create
-                    </Button>
-                </View>}
+                        Next
+                    </Button> : <View style={styles.logingContainer}>
+                        <Button style={styles.loginBtn} mode="contained" onPress={async () => {
+                            // formData.descrip = experienceeInputValue;
+                            formData['role'] = singUpedUserData.role
+                            formData['id'] = singUpedUserData.id
+                            console.log(formData)
+                            await saveData(formData)
+                        }}>
+                            Create
+                        </Button>
+                    </View>}
                 </View>
 
             </ScrollView>

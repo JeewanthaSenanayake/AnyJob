@@ -5,7 +5,7 @@ import { Colors } from 'react-native/Libraries/NewAppScreen';
 import axios from '../../services/axiosConfig'
 
 
-function AvailbleWorkers({ navigation, route }: any): JSX.Element {
+function Notification({ navigation, route }: any): JSX.Element {
     const isDarkMode = useColorScheme() === 'dark';
     const backgroundStyle = {
         backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
@@ -13,7 +13,7 @@ function AvailbleWorkers({ navigation, route }: any): JSX.Element {
     const { logedUser, selectedCategory } = route.params;
     const [data, setData] = useState([]);
 
-    function MakeRequest(wokerId){
+    function MakeRequest(wokerId) {
         navigation.navigate('MakeRequest', { logedUser, wokerId });
     }
 
@@ -21,7 +21,7 @@ function AvailbleWorkers({ navigation, route }: any): JSX.Element {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                await axios.get(`/api/woker/get_by_category/${selectedCategory}`).then(res => {
+                await axios.get(`/api/request/cus_notification/${logedUser.id}`).then(res => {
                     if (res.status == 200) {
                         console.log(res.data)
                         setData(res.data)
@@ -42,15 +42,15 @@ function AvailbleWorkers({ navigation, route }: any): JSX.Element {
                 backgroundColor={backgroundStyle.backgroundColor}
             />
             <View style={styles.appBar}>
-            <TouchableOpacity onPress={() => {
+                <TouchableOpacity onPress={() => {
                     navigation.navigate('CustomerDash', { logedUser });
                 }}>
-                    <Image style={styles.imgsIco} source={require('../../assets/icons/home_c.png')} />
+                    <Image style={styles.imgsIco} source={require('../../assets/icons/home.png')} />
                 </TouchableOpacity>
                 <TouchableOpacity onPress={() => {
                     navigation.navigate('Notification', { logedUser });
                 }}>
-                    <Image style={styles.imgsIco} source={require('../../assets/icons/notification.png')} />
+                    <Image style={styles.imgsIco} source={require('../../assets/icons/notification_c.png')} />
                 </TouchableOpacity>
                 <TouchableOpacity onPress={() => {
                     navigation.navigate('Account', { logedUser });
@@ -63,21 +63,22 @@ function AvailbleWorkers({ navigation, route }: any): JSX.Element {
 
             >
                 <View style={styles.outerContainer} >
-                    <Text style={styles.cateTitle} >{selectedCategory}</Text>
+                    <Text style={styles.cateTitle} >Notifications</Text>
                     <View>
-                        {data.length==0?<Text style={styles.noRequest}>No woker available</Text> :data.map((item, index) => (
+                        {data.length==0?<Text style={styles.noRequest}>No Notifications available</Text>:data.map((item, index) => (
                             <View key={index}>
-                                <TouchableOpacity onPress={ () => MakeRequest(item.wokerId)}>
-                                <View style={styles.container} >
-                                    <View style={styles.circle}>
-                                        <Image style={styles.imgs} source={{ uri: item.pImgUrl }} />
-                                    </View>
-                                    <View style={{marginLeft:10,marginTop:10}}>
-                                        <Text style={{fontWeight:"bold", fontSize:20}}>{item.name}</Text>
-                                        <Text style={{fontWeight:"bold"}}>{item.location}</Text>
-                                    </View>
+                                <TouchableOpacity onPress={() => MakeRequest(item.wokerId)}>
+                                    <View style={styles.container} >
+                                        <View style={styles.circle}>
+                                            <Image style={styles.imgs} source={item.status == 2 ? require('../../assets/icons/ok.jpg') : require('../../assets/icons/wrong.jpg')} />
+                                        </View>
+                                        <View style={{ marginLeft: 10, marginTop: 10 }}>
+                                            <Text style={{ fontWeight: "bold", fontSize: 20 }}>{item.name}</Text>
+                                            <Text style={{ fontWeight: "bold" }}>{item.category}</Text>
+                                            <Text style={{ fontWeight: "bold" }}>{item.status == 2?"Conformed":"Declined" }</Text>
+                                        </View>
 
-                                </View>
+                                    </View>
                                 </TouchableOpacity>
                             </View>
                         ))}
@@ -135,9 +136,9 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderColor: '#B2AAA9',
         borderRadius: 10,
-       
+
         backgroundColor: "#2987E2",
-        padding:10,
+        padding: 10,
 
     },
     circle: {
@@ -149,4 +150,4 @@ const styles = StyleSheet.create({
 
 });
 
-export default AvailbleWorkers;
+export default Notification;

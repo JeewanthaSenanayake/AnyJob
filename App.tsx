@@ -15,6 +15,12 @@ import CreateAccount from './screens/CreateAccunt'
 import CreateAccuntStep2 from './screens/CreateAccuntStep2'
 import CustomerDash from './screens/CustomerDash'
 import AvailbleWorkers from './screens/cus/AvailbleWorkers'
+import MakeRequest from './screens/cus/MakeRequest'
+import WokerDash from './screens/WokerDash'
+import AcceptRequest from './screens/wok/AcceptRequest'
+import Notification from './screens/cus/Notification'
+import Account from './screens/cus/Account'
+import AccountWoker from './screens/wok/AccountWoker'
 
 const Stack = createNativeStackNavigator();
 
@@ -58,6 +64,36 @@ function App(): JSX.Element {
           name="AvailbleWorkers"
           component={AvailbleWorkers}
           options={{title: 'AvailbleWorkers',headerShown: false}}
+        />
+        <Stack.Screen
+          name="MakeRequest"
+          component={MakeRequest}
+          options={{title: 'MakeRequest',headerShown: false}}
+        />
+        <Stack.Screen
+          name="WokerDash"
+          component={WokerDash}
+          options={{title: 'WokerDash',headerShown: false}}
+        />
+        <Stack.Screen
+          name="AcceptRequest"
+          component={AcceptRequest}
+          options={{title: 'AcceptRequest',headerShown: false}}
+        />
+        <Stack.Screen
+          name="Notification"
+          component={Notification}
+          options={{title: 'Notification',headerShown: false}}
+        />
+        <Stack.Screen
+          name="Account"
+          component={Account}
+          options={{title: 'Account',headerShown: false}}
+        />
+        <Stack.Screen
+          name="AccountWoker"
+          component={AccountWoker}
+          options={{title: 'AccountWoker',headerShown: false}}
         />
       </Stack.Navigator>
     </NavigationContainer>

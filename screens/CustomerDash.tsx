@@ -25,9 +25,21 @@ function CustomerDash({ navigation, route }: any): JSX.Element {
                 backgroundColor={backgroundStyle.backgroundColor}
             />
             <View style={styles.appBar}>
-                <Image style={styles.imgsIco} source={require('../assets/icons/home_c.png')} />
-                <Image style={styles.imgsIco} source={require('../assets/icons/notification.png')} />
-                <Image style={styles.imgsIco} source={require('../assets/icons/account.png')} />
+                <TouchableOpacity onPress={() => {
+                    navigation.navigate('CustomerDash', { logedUser });
+                }}>
+                    <Image style={styles.imgsIco} source={require('../assets/icons/home_c.png')} />
+                </TouchableOpacity>
+                <TouchableOpacity onPress={() => {
+                    navigation.navigate('Notification', { logedUser });
+                }}>
+                    <Image style={styles.imgsIco} source={require('../assets/icons/notification.png')} />
+                </TouchableOpacity>
+                <TouchableOpacity onPress={() => {
+                    navigation.navigate('Account', { logedUser });
+                }}>
+                    <Image style={styles.imgsIco} source={require('../assets/icons/account.png')} />
+                </TouchableOpacity>
             </View>
 
             <ScrollView
@@ -37,29 +49,29 @@ function CustomerDash({ navigation, route }: any): JSX.Element {
                 <View style={styles.outerContainer} >
                     {/* <Text>Cus = {logedUser.uname}</Text> */}
                     <View>
-                        <TouchableOpacity onPress={ () => clickedCaterogy("Painter")}>
+                        <TouchableOpacity onPress={() => clickedCaterogy("Painter")}>
                             <View style={styles.container} >
                                 <Image style={styles.imgs} source={require('../assets/catogeryImg/painter2.jpg')} />
                                 <Text style={styles.cateTitle}>Painter</Text>
                             </View>
                         </TouchableOpacity>
-                        <TouchableOpacity onPress={ () => clickedCaterogy("Mower")}>
-                        <View style={styles.container}>
-                            <Image style={styles.imgs} source={require('../assets/catogeryImg/mower2.jpg')} />
-                            <Text style={styles.cateTitle}>Mower</Text>
-                        </View>
+                        <TouchableOpacity onPress={() => clickedCaterogy("Mower")}>
+                            <View style={styles.container}>
+                                <Image style={styles.imgs} source={require('../assets/catogeryImg/mower2.jpg')} />
+                                <Text style={styles.cateTitle}>Mower</Text>
+                            </View>
                         </TouchableOpacity>
-                        <TouchableOpacity onPress={ () => clickedCaterogy("Coconut plucker")}>
-                        <View style={styles.container}>
-                            <Image style={styles.imgs} source={require('../assets/catogeryImg/coconut_plucker2.jpg')} />
-                            <Text style={styles.cateTitle}>Coconut plucker</Text>
-                        </View>
+                        <TouchableOpacity onPress={() => clickedCaterogy("Coconut plucker")}>
+                            <View style={styles.container}>
+                                <Image style={styles.imgs} source={require('../assets/catogeryImg/coconut_plucker2.jpg')} />
+                                <Text style={styles.cateTitle}>Coconut plucker</Text>
+                            </View>
                         </TouchableOpacity>
-                        <TouchableOpacity onPress={ () => clickedCaterogy("Plumber")}>
-                        <View style={styles.container}>
-                            <Image style={styles.imgs} source={require('../assets/catogeryImg/pulmber.jpg')} />
-                            <Text style={styles.cateTitle}>Plumber</Text>
-                        </View>
+                        <TouchableOpacity onPress={() => clickedCaterogy("Plumber")}>
+                            <View style={styles.container}>
+                                <Image style={styles.imgs} source={require('../assets/catogeryImg/pulmber.jpg')} />
+                                <Text style={styles.cateTitle}>Plumber</Text>
+                            </View>
                         </TouchableOpacity>
 
                     </View>

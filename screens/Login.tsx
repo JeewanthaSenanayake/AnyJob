@@ -44,7 +44,9 @@ function LoginScreen({ navigation }: any): JSX.Element {
       if (res.status == 200) {
         console.log(res.data)
         if (res.data.role == "Worker") {
-
+          let logedUser = res.data
+          let selectedCategory = "Painter"
+          navigation.navigate('WokerDash', { logedUser});
         } else if (res.data.role == "Customer") {
           let logedUser = res.data
           navigation.navigate('CustomerDash', { logedUser });
@@ -121,7 +123,7 @@ function LoginScreen({ navigation }: any): JSX.Element {
             }}>
               Login
             </Button>
-            <Text style={{ textAlign: "left", fontWeight: "bold", marginTop: 25 }} onPress={() => console.log('Forgot password?')}>Forgot password?</Text>
+            {/* <Text style={{ textAlign: "left", fontWeight: "bold", marginTop: 25 }} onPress={() => console.log('Forgot password?')}>Forgot password?</Text> */}
             <View style={{ flexDirection: 'row', justifyContent: "flex-start", marginTop: 25 }}>
               <Text>Don't have an account?</Text>
               <Text style={{ fontWeight: "bold" }} onPress={() => {

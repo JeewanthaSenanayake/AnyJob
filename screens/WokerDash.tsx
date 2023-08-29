@@ -2,26 +2,28 @@ import React, { useEffect, useState } from 'react';
 import { Image, ScrollView, StatusBar, StyleSheet, TouchableOpacity, View, useColorScheme } from 'react-native';
 import { Text } from 'react-native-paper';
 import { Colors } from 'react-native/Libraries/NewAppScreen';
-import axios from '../../services/axiosConfig'
+import axios from '../services/axiosConfig'
 
 
-function AvailbleWorkers({ navigation, route }: any): JSX.Element {
+
+function WokerDash({ navigation, route }: any): JSX.Element {
     const isDarkMode = useColorScheme() === 'dark';
     const backgroundStyle = {
         backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
     }
-    const { logedUser, selectedCategory } = route.params;
+    const { logedUser } = route.params;
     const [data, setData] = useState([]);
 
-    function MakeRequest(wokerId){
-        navigation.navigate('MakeRequest', { logedUser, wokerId });
+    function MakeRequest(data) {
+        navigation.navigate('AcceptRequest', { logedUser, data });
     }
 
 
     useEffect(() => {
         const fetchData = async () => {
+
             try {
-                await axios.get(`/api/woker/get_by_category/${selectedCategory}`).then(res => {
+                await axios.get(`/api/request/admin_notification/${logedUser.id}`).then(res => {
                     if (res.status == 200) {
                         console.log(res.data)
                         setData(res.data)
@@ -33,7 +35,8 @@ function AvailbleWorkers({ navigation, route }: any): JSX.Element {
         };
 
         fetchData();
-    }, []);
+    });
+
 
     return (
         <View>
@@ -42,20 +45,15 @@ function AvailbleWorkers({ navigation, route }: any): JSX.Element {
                 backgroundColor={backgroundStyle.backgroundColor}
             />
             <View style={styles.appBar}>
-            <TouchableOpacity onPress={() => {
-                    navigation.navigate('CustomerDash', { logedUser });
+                <TouchableOpacity onPress={() => {
+                    navigation.navigate('WokerDash', { logedUser });
                 }}>
-                    <Image style={styles.imgsIco} source={require('../../assets/icons/home_c.png')} />
+                    <Image style={styles.imgsIco} source={require('../assets/icons/home_c.png')} />
                 </TouchableOpacity>
                 <TouchableOpacity onPress={() => {
-                    navigation.navigate('Notification', { logedUser });
+                    navigation.navigate('AccountWoker', { logedUser });
                 }}>
-                    <Image style={styles.imgsIco} source={require('../../assets/icons/notification.png')} />
-                </TouchableOpacity>
-                <TouchableOpacity onPress={() => {
-                    navigation.navigate('Account', { logedUser });
-                }}>
-                    <Image style={styles.imgsIco} source={require('../../assets/icons/account.png')} />
+                    <Image style={styles.imgsIco} source={require('../assets/icons/account.png')} />
                 </TouchableOpacity>
             </View>
             <ScrollView
@@ -63,24 +61,24 @@ function AvailbleWorkers({ navigation, route }: any): JSX.Element {
 
             >
                 <View style={styles.outerContainer} >
-                    <Text style={styles.cateTitle} >{selectedCategory}</Text>
+                    <Text style={styles.cateTitle} >Request for you</Text>
                     <View>
-                        {data.length==0?<Text style={styles.noRequest}>No woker available</Text> :data.map((item, index) => (
+                        
+                        {data.length==0?<Text style={styles.noRequest}>No request available</Text> :data.map((item, index) => (
                             <View key={index}>
-                                <TouchableOpacity onPress={ () => MakeRequest(item.wokerId)}>
-                                <View style={styles.container} >
-                                    <View style={styles.circle}>
-                                        <Image style={styles.imgs} source={{ uri: item.pImgUrl }} />
-                                    </View>
-                                    <View style={{marginLeft:10,marginTop:10}}>
-                                        <Text style={{fontWeight:"bold", fontSize:20}}>{item.name}</Text>
-                                        <Text style={{fontWeight:"bold"}}>{item.location}</Text>
-                                    </View>
+                                <TouchableOpacity onPress={() => MakeRequest(item)}>
+                                    <View style={styles.container} >
 
-                                </View>
+                                        <View style={{ marginLeft: 10, marginTop: 10 }}>
+                                            <Text style={{ fontWeight: "bold", fontSize: 20 }}>{item.fname} {item.lname}</Text>
+                                            <Text style={{ fontWeight: "bold" }}>{item.address}</Text>
+                                        </View>
+
+                                    </View>
                                 </TouchableOpacity>
                             </View>
                         ))}
+                    
                     </View>
                 </View>
 
@@ -118,8 +116,8 @@ const styles = StyleSheet.create({
         padding: 25
     },
     cateTitle: {
-        color: "blue",
-        fontSize: 20,
+        color: "black",
+        fontSize: 22,
         fontWeight: "bold"
 
     },
@@ -135,9 +133,9 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderColor: '#B2AAA9',
         borderRadius: 10,
-       
+
         backgroundColor: "#2987E2",
-        padding:10,
+        padding: 10,
 
     },
     circle: {
@@ -149,4 +147,5 @@ const styles = StyleSheet.create({
 
 });
 
-export default AvailbleWorkers;
+export default WokerDash;
+
