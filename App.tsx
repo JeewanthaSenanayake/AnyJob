@@ -13,6 +13,8 @@ import SingUpScreen from './screens/SingUp'
 import CategoryScreen from './screens/Category'
 import CreateAccount from './screens/CreateAccunt'
 import CreateAccuntStep2 from './screens/CreateAccuntStep2'
+import CustomerDash from './screens/CustomerDash'
+import AvailbleWorkers from './screens/cus/AvailbleWorkers'
 
 const Stack = createNativeStackNavigator();
 
@@ -46,6 +48,16 @@ function App(): JSX.Element {
           name="CreateAccuntStep2"
           component={CreateAccuntStep2}
           options={{title: 'CreateAccuntStep2',headerShown: false}}
+        />
+        <Stack.Screen
+          name="CustomerDash"
+          component={CustomerDash}
+          options={{title: 'CustomerDash',headerShown: false}}
+        />
+        <Stack.Screen
+          name="AvailbleWorkers"
+          component={AvailbleWorkers}
+          options={{title: 'AvailbleWorkers',headerShown: false}}
         />
       </Stack.Navigator>
     </NavigationContainer>

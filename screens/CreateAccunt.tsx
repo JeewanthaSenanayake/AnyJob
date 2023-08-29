@@ -36,6 +36,10 @@ function CreateAccount({ navigation, route }: any): JSX.Element {
             label: "Coconut plucker",
             value: "Coconut plucker",
         },
+        {
+            label: "Plumber",
+            value: "Plumber",
+        }
     ]
 
     const isDarkMode = useColorScheme() === 'dark';

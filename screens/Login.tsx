@@ -9,6 +9,7 @@ import React, { useState } from 'react';
 import { Button, TextInput } from 'react-native-paper';
 
 import {
+  Alert,
   Image,
   ImageBackground,
   ScrollView,
@@ -23,34 +24,52 @@ import {
   Colors,
 } from 'react-native/Libraries/NewAppScreen';
 
+import axios from '../services/axiosConfig';
 
 
 
-function LoginScreen({navigation}:any): JSX.Element  {
+
+function LoginScreen({ navigation }: any): JSX.Element {
   const isDarkMode = useColorScheme() === 'dark';
   const [usernameInputValue, setUsernameInputValue] = useState('');
   const [passwordInputValue, setPasswordInputValue] = useState('');
   const [secureTextEntry, setSecureTextEntry] = useState(true);
 
   const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker :  Colors.lighter,
+    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
   }
 
+  async function logInToSysytem(uname, password) {
+    await axios.post('/api/auth/login', { "uname": uname, "password": password }).then(res => {
+      if (res.status == 200) {
+        console.log(res.data)
+        if (res.data.role == "Worker") {
 
+        } else if (res.data.role == "Customer") {
+          let logedUser = res.data
+          navigation.navigate('CustomerDash', { logedUser });
+        }
+      }
+    }).catch(error => {
+      // Handle errors here
+      Alert.alert("User name and Password not match")
+
+    });
+  }
 
   return (
     <ImageBackground
       source={require('../assets/background/bg.jpg')}
       style={styles.imageBackground}
     >
-    {/* <SafeAreaView style={backgroundStyle}> */}
+      {/* <SafeAreaView style={backgroundStyle}> */}
       <StatusBar
         barStyle={isDarkMode ? 'light-content' : 'dark-content'}
         backgroundColor={backgroundStyle.backgroundColor}
       />
       <ScrollView
         contentInsetAdjustmentBehavior="automatic"
-        >
+      >
 
         <View style={styles.container}>
           <Image style={styles.imgs} source={require('../assets/images/anyjob.png')} />
@@ -96,22 +115,25 @@ function LoginScreen({navigation}:any): JSX.Element  {
             }
           />
           <View style={styles.logingContainer}>
-            <Button style={styles.loginBtn} mode="contained" onPress={() => console.log('Login')}>
+            <Button style={styles.loginBtn} mode="contained" onPress={() => {
+              logInToSysytem(usernameInputValue, passwordInputValue);
+              console.log('Login')
+            }}>
               Login
             </Button>
-            <Text style={{ textAlign: "left",fontWeight: "bold", marginTop: 25 }} onPress={() => console.log('Forgot password?')}>Forgot password?</Text>
-            <View style={{ flexDirection: 'row', justifyContent: "flex-start",marginTop: 25 }}>
-            <Text>Don't have an account?</Text>
-            <Text style={{ fontWeight: "bold" }} onPress={() => {
-              console.log('Sign Up');
-              navigation.navigate('SingUp')
+            <Text style={{ textAlign: "left", fontWeight: "bold", marginTop: 25 }} onPress={() => console.log('Forgot password?')}>Forgot password?</Text>
+            <View style={{ flexDirection: 'row', justifyContent: "flex-start", marginTop: 25 }}>
+              <Text>Don't have an account?</Text>
+              <Text style={{ fontWeight: "bold" }} onPress={() => {
+                console.log('Sign Up');
+                navigation.navigate('SingUp')
               }}>Sign Up</Text>
+            </View>
           </View>
-          </View>
-          
+
         </View>
       </ScrollView>
-    {/* </SafeAreaView> */}
+      {/* </SafeAreaView> */}
     </ImageBackground>
   );
 }
@@ -122,13 +144,13 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     textAlign: "center",
     marginTop: 40,
-    color:"white"
+    color: "white"
   },
   imgs: {
     height: 225,
     width: 225,
     alignContent: "center",
-    resizeMode:"contain"
+    resizeMode: "contain"
   },
   container: {
     marginTop: 50,
@@ -183,7 +205,5 @@ const styles = StyleSheet.create({
 });
 
 export default LoginScreen;
-function componentDidMount() {
-  throw new Error('Function not implemented.');
-}
+
 
