@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Image, ImageBackground, ScrollView, StatusBar, StyleSheet, View, useColorScheme } from 'react-native';
+import { Alert, Image, ImageBackground, ScrollView, StatusBar, StyleSheet, View, useColorScheme } from 'react-native';
 import { Button, RadioButton, Text, TextInput } from 'react-native-paper';
 import DropDown from 'react-native-paper-dropdown';
 import { Colors } from 'react-native/Libraries/NewAppScreen';
@@ -49,7 +49,19 @@ function CreateAccount({ navigation, route }: any): JSX.Element {
         backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
     };
 
+    const [error, setError] = useState('');
+
     const handleInputChange = (key: any, value: any) => {
+        if (key == "gender") {
+            if(value.toLowerCase()=="male" || value.toLowerCase()=="male"){
+                setError('');
+            }else{
+                setError('Please input valid input');
+            }
+            
+        } else {
+            
+        }
         setFormData({
             ...formData,
             [key]: value,
@@ -62,11 +74,14 @@ function CreateAccount({ navigation, route }: any): JSX.Element {
             if (res.status == 200) {
                 console.log("Account created")
                 navigation.navigate('Home');
+            }else{
+                Alert.alert("Please fill in all required fields correctly")
             }
         })
             .catch(error => {
                 // Handle errors here
                 console.error('API call error:', error);
+                Alert.alert("Please fill in all required fields correctly")
 
             });
     }
@@ -147,6 +162,7 @@ function CreateAccount({ navigation, route }: any): JSX.Element {
                         onChangeText={(value) => handleInputChange('gender', value)}
                         value={formData.gender}
                     ></TextInput>
+                    {error && <Text style={{color:"white"}}>{error}</Text>}
                     <TextInput
                         style={styles.textInput}
                         placeholder="Current location*"
@@ -161,6 +177,7 @@ function CreateAccount({ navigation, route }: any): JSX.Element {
 
                         formData['role'] = singUpedUserData.role
                         formData['id'] = singUpedUserData.id
+                        console.log(formData)
                         navigation.navigate('CreateAccuntStep2', { formData });
 
                     }}>
@@ -171,7 +188,13 @@ function CreateAccount({ navigation, route }: any): JSX.Element {
                             formData['role'] = singUpedUserData.role
                             formData['id'] = singUpedUserData.id
                             console.log(formData)
-                            await saveData(formData)
+                            if(error){
+                                Alert.alert("Invalid gender input")
+                            }else{
+                                await saveData(formData)
+                            }
+                            
+                            // 
                         }}>
                             Create
                         </Button>

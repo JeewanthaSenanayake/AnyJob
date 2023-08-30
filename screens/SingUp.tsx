@@ -9,6 +9,7 @@ import React, { useEffect, useState } from 'react';
 import { Button, TextInput } from 'react-native-paper';
 
 import {
+  Alert,
   Image,
   ImageBackground,
   ScrollView,
@@ -52,6 +53,7 @@ function SingUpScreen({ navigation }: any): JSX.Element {
       navigation.navigate('Category', {userCred});
     } else {
       console.log("no data");
+      Alert.alert("Please fill in all required fields correctly")
     }
 
   }

@@ -1,12 +1,12 @@
 
 import React, { useState } from 'react';
-import { Image, ImageBackground, ScrollView, StatusBar, StyleSheet, View, useColorScheme } from 'react-native';
+import { Alert, Image, ImageBackground, ScrollView, StatusBar, StyleSheet, View, useColorScheme } from 'react-native';
 import { Button, RadioButton, Text, TextInput } from 'react-native-paper';
 import { Colors } from 'react-native/Libraries/NewAppScreen';
 
 import axios from '../services/axiosConfig';
 import { launchImageLibrary } from 'react-native-image-picker';
-import 'firebase/compat/storage';
+
 
 
 
@@ -58,11 +58,14 @@ function CreateAccuntStep2({ navigation, route }: any): JSX.Element {
             if (res.status == 200) {
                 console.log("Account created")
                 navigation.navigate('Home');
+            }else{
+                Alert.alert("Please fill in all required fields correctly")
             }
         })
             .catch(error => {
                 // Handle errors here
                 console.error('API call error:', error);
+                Alert.alert("Please fill in all required fields correctly")
 
             });
     }

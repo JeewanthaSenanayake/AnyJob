@@ -51,10 +51,14 @@ function LoginScreen({ navigation }: any): JSX.Element {
           let logedUser = res.data
           navigation.navigate('CustomerDash', { logedUser });
         }
+      }else{
+        console.log("Username or password is incorrect")
+        Alert.alert("Username or password is incorrect")
       }
     }).catch(error => {
       // Handle errors here
-      Alert.alert("User name and Password not match")
+      console.log("Username or password is incorrect")
+      Alert.alert("Username or password is incorrect")
 
     });
   }
