@@ -60,7 +60,12 @@ function Account({ navigation, route }: any): JSX.Element {
             >
                 <View style={styles.outerContainer} >
                     <View style={styles.container}>
+                    
                         <View style={styles.centerView}>
+                        <View style={styles.circle}>
+                                <Image style={styles.imgs} source={require('../../assets/images/blank-pfp.png')} />
+
+                            </View>
                             <Text style={styles.cateTitle} >{data.fname} {data.lname}</Text>
                             <View style={{ marginTop: 10 }}>
                                 <View style={{ flexDirection: 'row' }}>
