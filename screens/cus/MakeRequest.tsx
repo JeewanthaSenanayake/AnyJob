@@ -81,7 +81,8 @@ function MakeRequest({ navigation, route }: any): JSX.Element {
                     <View style={styles.container}>
                         <View style={styles.centerView}>
                             <View style={styles.circle}>
-                                <Image style={styles.imgs} source={{ uri: data.pImgUrl }} />
+                                {/* <Image style={styles.imgs} source={{ uri: data.pImgUrl }} /> */}
+                                <Image style={styles.imgs} source={(data.pImgUrl == null || data.pImgUrl == "") ? require('../../assets/images/blank-pfp.png') : { uri: data.pImgUrl }} />
 
                             </View>
                             <Text style={styles.cateTitle} >{data.fname} {data.lname}</Text>
@@ -134,7 +135,14 @@ function MakeRequest({ navigation, route }: any): JSX.Element {
                         Photos
                     </Text>
                     <View style={styles.centerView}>
-                        <Image style={styles.workImg} source={{ uri: data.workImgUrl }} />
+                        {/* <Image style={styles.workImg} source={{ uri: data.workImgUrl }} /> */}
+                        {(data.workImgUrl == null || data.workImgUrl == "") ? <Text style={{
+                            fontSize: 15,
+                            color: "#8C8781",
+                            alignContent: "center",
+                            alignSelf: "center",
+                            marginTop: 25
+                        }}>No photos available</Text> : <Image style={styles.workImg} source={{ uri: data.workImgUrl }} />}
                     </View>
 
                     <Text style={styles.PhotoTitle} >

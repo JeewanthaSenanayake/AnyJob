@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { Alert, Image, ImageBackground, ScrollView, StatusBar, StyleSheet, View, useColorScheme } from 'react-native';
+import { Alert, Image, ImageBackground, ScrollView, StatusBar, StyleSheet, TouchableOpacity, View, useColorScheme } from 'react-native';
 import { Button, RadioButton, Text, TextInput } from 'react-native-paper';
 import { Colors } from 'react-native/Libraries/NewAppScreen';
 
@@ -58,7 +58,7 @@ function CreateAccuntStep2({ navigation, route }: any): JSX.Element {
             if (res.status == 200) {
                 console.log("Account created")
                 navigation.navigate('Home');
-            }else{
+            } else {
                 Alert.alert("Please fill in all required fields correctly")
             }
         })
@@ -101,24 +101,36 @@ function CreateAccuntStep2({ navigation, route }: any): JSX.Element {
                 <View style={styles.container}>
                     {selectedPPImage && <Image style={styles.imgs} source={{ uri: selectedPPImage }} />}
                 </View>
-                <View style={styles.textInputView}>
-                    <Button labelStyle={{
-                        fontSize: 18,
-                        color: '#FFFFFF',
-                    }} onPress={() => { ImagePicker(0) }} >Upload Profile Photo</Button>
-                </View>
+                <TouchableOpacity onPress={() => ImagePicker(0)}>
+                    <View style={styles.containerBoader}>
+                        <Image style={styles.imgsIco} source={require('../assets/icons/upload.png')} />
+                        <Text style={{
+                            fontSize: 18,
+                            color: '#FFFFFF',
+                        }}>Upload Profile Photo</Text>
+                    </View>
+                </TouchableOpacity>
 
                 <View style={styles.container}>
                     {selectedWDImage && <Image style={styles.imgs} source={{ uri: selectedWDImage }} />}
                 </View>
-                <View style={styles.textInputView}>
+                <TouchableOpacity onPress={() => ImagePicker(1)}>
+                    <View style={styles.containerBoader}>
+                        <Image style={styles.imgsIco} source={require('../assets/icons/upload.png')} />
+                        <Text style={{
+                            fontSize: 18,
+                            color: '#FFFFFF',
+                        }}>Upload Work Done Photo</Text>
+                    </View>
+                </TouchableOpacity>
+                {/* <View style={styles.textInputView}>
 
                     <Button labelStyle={{
                         fontSize: 18,
                         color: '#FFFFFF',
                     }} onPress={() => { ImagePicker(1) }} >Upload Work Done Photo</Button>
 
-                </View>
+                </View> */}
 
                 <View style={styles.logingContainer}>
                     <Button style={styles.loginBtn} mode="contained" onPress={async () => {
@@ -138,6 +150,18 @@ function CreateAccuntStep2({ navigation, route }: any): JSX.Element {
 }
 
 const styles = StyleSheet.create({
+    containerBoader: {
+        alignContent: "center",
+        marginTop: 10,
+        flex: 1,
+        borderWidth: 1,
+        borderColor: 'white',
+        borderRadius: 10,
+        marginLeft: 50,
+        marginRight: 50,
+        padding: 10,
+        alignItems: "center"
+    },
     imageBackground: {
         flex: 1,
         resizeMode: 'cover', // This adjusts the image to cover the entire component

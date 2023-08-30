@@ -12,15 +12,15 @@ function AcceptRequest({ navigation, route }: any): JSX.Element {
     }
     const { logedUser, data } = route.params;
 
-    async function accrept_reject_request(status){
+    async function accrept_reject_request(status) {
         let Reqdata = {
-            "cus_id":data.id,
-            "woker_id":logedUser.id,
-            "requested":status
+            "cus_id": data.id,
+            "woker_id": logedUser.id,
+            "requested": status
         }
-        await axios.post('/api/request/update_request',Reqdata).then(res =>{
-            if(res.status==200){
-                navigation.navigate('WokerDash', { logedUser});
+        await axios.post('/api/request/update_request', Reqdata).then(res => {
+            if (res.status == 200) {
+                navigation.navigate('WokerDash', { logedUser });
             }
         })
     }
@@ -33,16 +33,17 @@ function AcceptRequest({ navigation, route }: any): JSX.Element {
                 backgroundColor={backgroundStyle.backgroundColor}
             />
             <View style={styles.appBar}>
-            <TouchableOpacity onPress={() => {
-                    navigation.navigate('WokerDash', { logedUser });
-                }}>
-                    <Image style={styles.imgsIco} source={require('../../assets/icons/home_c.png')} />
-                </TouchableOpacity>
                 <TouchableOpacity onPress={() => {
                     navigation.navigate('AccountWoker', { logedUser });
                 }}>
                     <Image style={styles.imgsIco} source={require('../../assets/icons/account.png')} />
                 </TouchableOpacity>
+                <TouchableOpacity onPress={() => {
+                    navigation.navigate('WokerDash', { logedUser });
+                }}>
+                    <Image style={styles.imgsIco} source={require('../../assets/icons/notification_c.png')} />
+                </TouchableOpacity>
+
             </View>
             <ScrollView
                 contentInsetAdjustmentBehavior="automatic"
@@ -51,6 +52,10 @@ function AcceptRequest({ navigation, route }: any): JSX.Element {
                 <View style={styles.outerContainer} >
                     <View style={styles.container}>
                         <View style={styles.centerView}>
+                            <View style={styles.circle}>
+                                <Image style={styles.imgs} source={require('../../assets/images/blank-pfp.png')} />
+
+                            </View>
                             <Text style={styles.cateTitle} >{data.fname} {data.lname}</Text>
                             <View style={{ marginTop: 10 }}>
                                 <View style={{ flexDirection: 'row' }}>
@@ -89,7 +94,7 @@ function AcceptRequest({ navigation, route }: any): JSX.Element {
                             <Text style={styles.normalText} >{data.location}</Text>
                         </View>
                     </View>
-                    
+
                 </View>
             </ScrollView>
         </View>
@@ -145,7 +150,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
     },
     loginBtn: {
-        width: 150,
+        width: "auto",
         marginTop: 45,
         marginRight: 10
     },

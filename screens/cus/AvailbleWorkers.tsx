@@ -70,7 +70,8 @@ function AvailbleWorkers({ navigation, route }: any): JSX.Element {
                                 <TouchableOpacity onPress={ () => MakeRequest(item.wokerId)}>
                                 <View style={styles.container} >
                                     <View style={styles.circle}>
-                                        <Image style={styles.imgs} source={{ uri: item.pImgUrl }} />
+                                        {/* <Image style={styles.imgs} source={{ uri: item.pImgUrl }} /> */}
+                                        <Image style={styles.imgs} source={(item.pImgUrl == null || item.pImgUrl == "") ? require('../../assets/images/blank-pfp.png') : { uri: item.pImgUrl }} />
                                     </View>
                                     <View style={{marginLeft:10,marginTop:10}}>
                                         <Text style={{fontWeight:"bold", fontSize:20}}>{item.name}</Text>

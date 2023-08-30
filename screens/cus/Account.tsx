@@ -60,9 +60,9 @@ function Account({ navigation, route }: any): JSX.Element {
             >
                 <View style={styles.outerContainer} >
                     <View style={styles.container}>
-                    
+
                         <View style={styles.centerView}>
-                        <View style={styles.circle}>
+                            <View style={styles.circle}>
                                 <Image style={styles.imgs} source={require('../../assets/images/blank-pfp.png')} />
 
                             </View>
@@ -81,21 +81,21 @@ function Account({ navigation, route }: any): JSX.Element {
                                     <Text style={styles.normalText}>{data.address}</Text>
                                 </View>
                             </View>
-                            
+
                         </View>
                         <View >
                             <Text style={styles.DiscTitle} >Location details</Text>
                             <Text style={styles.normalText} >{data.location}</Text>
                         </View>
                     </View>
-                    <Button style = {{marginTop:15}}  labelStyle={{
+                    <Button style={{ marginTop: 15 }} labelStyle={{
                         fontSize: 18,
                         color: 'red',
                     }}
-                    onPress={()=>{
-                        navigation.navigate('Home');
-                    }}
-                    >Log out</Button>    
+                        onPress={() => {
+                            navigation.navigate('Home');
+                        }}
+                    >Log out</Button>
                 </View>
 
             </ScrollView>

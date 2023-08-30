@@ -21,7 +21,7 @@ function WokerDash({ navigation, route }: any): JSX.Element {
 
     useEffect(() => {
         const fetchData = async () => {
-
+            console.log(">>>>>>>>>>>>>>> ", logedUser.id)
             try {
                 await axios.get(`/api/request/admin_notification/${logedUser.id}`).then(res => {
                     if (res.status == 200) {
@@ -46,15 +46,16 @@ function WokerDash({ navigation, route }: any): JSX.Element {
             />
             <View style={styles.appBar}>
                 <TouchableOpacity onPress={() => {
-                    navigation.navigate('WokerDash', { logedUser });
-                }}>
-                    <Image style={styles.imgsIco} source={require('../assets/icons/home_c.png')} />
-                </TouchableOpacity>
-                <TouchableOpacity onPress={() => {
                     navigation.navigate('AccountWoker', { logedUser });
                 }}>
                     <Image style={styles.imgsIco} source={require('../assets/icons/account.png')} />
                 </TouchableOpacity>
+                <TouchableOpacity onPress={() => {
+                    navigation.navigate('WokerDash', { logedUser });
+                }}>
+                    <Image style={styles.imgsIco} source={require('../assets/icons/notification_c.png')} />
+                </TouchableOpacity>
+
             </View>
             <ScrollView
                 contentInsetAdjustmentBehavior="automatic"
@@ -63,22 +64,35 @@ function WokerDash({ navigation, route }: any): JSX.Element {
                 <View style={styles.outerContainer} >
                     <Text style={styles.cateTitle} >Request for you</Text>
                     <View>
-                        
-                        {data.length==0?<Text style={styles.noRequest}>No request available</Text> :data.map((item, index) => (
+
+                        {data.length == 0 ? <Text style={styles.noRequest}>No request available</Text> : data.map((item, index) => (
                             <View key={index}>
-                                <TouchableOpacity onPress={() => MakeRequest(item)}>
+                                {item.status == "1" ? <TouchableOpacity onPress={() => MakeRequest(item.data)}>
                                     <View style={styles.container} >
 
                                         <View style={{ marginLeft: 10, marginTop: 10 }}>
-                                            <Text style={{ fontWeight: "bold", fontSize: 20 }}>{item.fname} {item.lname}</Text>
-                                            <Text style={{ fontWeight: "bold" }}>{item.address}</Text>
+                                            <Text style={{ fontWeight: "bold", fontSize: 20 }}>{item.data.fname} {item.data.lname}</Text>
+                                            <Text style={{ fontWeight: "bold" }}>{item.data.address}</Text>
+        
+                                            <Text>Satatus : Pending</Text>
                                         </View>
 
                                     </View>
-                                </TouchableOpacity>
+                                </TouchableOpacity> : <View style={styles.container2} >
+
+                                    <View style={{ marginLeft: 10, marginTop: 10 }}>
+                                        <Text style={{ fontWeight: "bold", fontSize: 20 }}>{item.data.fname} {item.data.lname}</Text>
+                                        <Text style={{ fontWeight: "bold" }}>{item.data.address}</Text>
+                                        {
+                                           item.status == "2" ?<Text>Satatus : Approved</Text> :<Text>Satatus : Declined</Text>
+                                        }
+                                    </View>
+
+                                </View>}
+
                             </View>
                         ))}
-                    
+
                     </View>
                 </View>
 
@@ -90,12 +104,12 @@ function WokerDash({ navigation, route }: any): JSX.Element {
 }
 
 const styles = StyleSheet.create({
-    noRequest:{
-        fontSize:25,
-        color:"#8C8781",
-        alignContent:"center",
-        alignSelf:"center",
-        marginTop:50
+    noRequest: {
+        fontSize: 25,
+        color: "#8C8781",
+        alignContent: "center",
+        alignSelf: "center",
+        marginTop: 50
     },
     imgsIco: {
         height: 30,
@@ -135,6 +149,19 @@ const styles = StyleSheet.create({
         borderRadius: 10,
 
         backgroundColor: "#2987E2",
+        padding: 10,
+
+    },
+    container2: {
+        marginTop: 50,
+        flex: 1,
+        flexDirection: 'row',
+        alignItems: 'flex-start',
+        borderWidth: 1,
+        borderColor: '#B2AAA9',
+        borderRadius: 10,
+
+        backgroundColor: "#8A8885",
         padding: 10,
 
     },

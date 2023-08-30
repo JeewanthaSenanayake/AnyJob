@@ -9,7 +9,7 @@ function AccountWoker({ navigation, route }: any): JSX.Element {
     const backgroundStyle = {
         backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
     }
-    const { logedUser} = route.params;
+    const { logedUser } = route.params;
     const [data, setData] = useState({});
 
 
@@ -38,15 +38,16 @@ function AccountWoker({ navigation, route }: any): JSX.Element {
             />
             <View style={styles.appBar}>
             <TouchableOpacity onPress={() => {
-                    navigation.navigate('WokerDash', { logedUser });
-                }}>
-                    <Image style={styles.imgsIco} source={require('../../assets/icons/home.png')} />
-                </TouchableOpacity>
-                <TouchableOpacity onPress={() => {
                     navigation.navigate('AccountWoker', { logedUser });
                 }}>
                     <Image style={styles.imgsIco} source={require('../../assets/icons/account_c.png')} />
                 </TouchableOpacity>
+                <TouchableOpacity onPress={() => {
+                    navigation.navigate('WokerDash', { logedUser });
+                }}>
+                    <Image style={styles.imgsIco} source={require('../../assets/icons/notification.png')} />
+                </TouchableOpacity>
+                
             </View>
             <ScrollView
                 contentInsetAdjustmentBehavior="automatic"
@@ -56,7 +57,7 @@ function AccountWoker({ navigation, route }: any): JSX.Element {
                     <View style={styles.container}>
                         <View style={styles.centerView}>
                             <View style={styles.circle}>
-                                <Image style={styles.imgs} source={{ uri: data.pImgUrl }} />
+                                <Image style={styles.imgs} source={(data.pImgUrl == null || data.pImgUrl == "") ? require('../../assets/images/blank-pfp.png') : { uri: data.pImgUrl }} />
 
                             </View>
                             <Text style={styles.cateTitle} >{data.fname} {data.lname}</Text>
@@ -75,7 +76,7 @@ function AccountWoker({ navigation, route }: any): JSX.Element {
                                     <Text style={styles.normalText}>{data.address}</Text>
                                 </View>
                             </View>
-                            
+
                         </View>
                         <View >
                             <Text style={styles.DiscTitle} >Discription</Text>
@@ -103,16 +104,23 @@ function AccountWoker({ navigation, route }: any): JSX.Element {
                         Photos
                     </Text>
                     <View style={styles.centerView}>
-                        <Image style={styles.workImg} source={{ uri: data.workImgUrl }} />
+                        {(data.workImgUrl == null || data.workImgUrl == "") ? <Text style={{
+                            fontSize: 15,
+                            color: "#8C8781",
+                            alignContent: "center",
+                            alignSelf: "center",
+                            marginTop: 25
+                        }}>No photos available</Text> : <Image style={styles.workImg} source={{ uri: data.workImgUrl }} />}
+
                     </View>
-                    <Button style = {{marginTop:25, marginBottom:15}}  labelStyle={{
+                    <Button style={{ marginTop: 25, marginBottom: 15 }} labelStyle={{
                         fontSize: 18,
                         color: 'red',
                     }}
-                    onPress={()=>{
-                        navigation.navigate('Home');
-                    }}
-                    >Log out</Button>  
+                        onPress={() => {
+                            navigation.navigate('Home');
+                        }}
+                    >Log out</Button>
                 </View>
 
             </ScrollView>

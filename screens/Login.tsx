@@ -46,7 +46,7 @@ function LoginScreen({ navigation }: any): JSX.Element {
         if (res.data.role == "Worker") {
           let logedUser = res.data
           let selectedCategory = "Painter"
-          navigation.navigate('WokerDash', { logedUser});
+          navigation.navigate('AccountWoker', { logedUser});
         } else if (res.data.role == "Customer") {
           let logedUser = res.data
           navigation.navigate('CustomerDash', { logedUser });
