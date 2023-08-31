@@ -53,7 +53,7 @@ function CreateAccount({ navigation, route }: any): JSX.Element {
 
     const handleInputChange = (key: any, value: any) => {
         if (key == "gender") {
-            if(value.toLowerCase()=="male" || value.toLowerCase()=="male"){
+            if(value.toLowerCase()=="male" || value.toLowerCase()=="Female"){
                 setError('');
             }else{
                 setError('Please input valid input');
